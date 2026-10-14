@@ -35,7 +35,6 @@ function changeQuantity(cart, id, quantity) {
     throw new RangeError("Quantity must not be less than 1");
   }
 
-
   if (existingProduct) {
     if (existingProduct.stock < quantity) {
       throw new RangeError("Quantity cannot be greater than stock value");
@@ -46,9 +45,10 @@ function changeQuantity(cart, id, quantity) {
   return cart;
 }
 
-function removeFromCart() {
-  return notImplemented();
+function removeFromCart(cart, id) {
+  return cart.filter((i) => i.id !== id);
 }
+
 function calculateCartSubtotal() {
   return notImplemented();
 }
