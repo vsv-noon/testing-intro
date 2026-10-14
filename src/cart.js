@@ -27,9 +27,25 @@ function addToCart(cart, product, quantity) {
   }
   return cart;
 }
-function changeQuantity() {
-  return notImplemented();
+
+function changeQuantity(cart, id, quantity) {
+  const existingProduct = cart.find((i) => i.id === id);
+
+  if (quantity < 1) {
+    throw new RangeError("Quantity must not be less than 1");
+  }
+
+
+  if (existingProduct) {
+    if (existingProduct.stock < quantity) {
+      throw new RangeError("Quantity cannot be greater than stock value");
+    }
+    existingProduct.quantity = quantity;
+  }
+
+  return cart;
 }
+
 function removeFromCart() {
   return notImplemented();
 }
