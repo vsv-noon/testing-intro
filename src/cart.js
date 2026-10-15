@@ -50,11 +50,34 @@ function removeFromCart(cart, id) {
 }
 
 function calculateCartSubtotal(cart) {
-  return cart.reduce((acc, curr) => acc += curr.price * curr.quantity, 0);
+  return cart.reduce((acc, curr) => (acc += curr.price * curr.quantity), 0);
 }
 
-function calculateOrderTotal() {
-  return notImplemented();
+function calculateOrderTotal(cart, promoCode) {
+  const cartSubtotal = calculateCartSubtotal(cart);
+  let discount = 0;
+  let delivery = 0;
+
+  if (promoCode === "SAVE10" && cartSubtotal >= 20_000) {
+    discount = cartSubtotal * 0.1;
+  } else {
+    discount = 0;
+  }
+
+  if (cartSubtotal >= 50_000) {
+    delivery = 0;
+  } else {
+    delivery = 30_000;
+  }
+
+  let totalSum = cartSubtotal > 0 ? cartSubtotal - discount + delivery : 0;
+
+  return {
+    subtotal: cartSubtotal,
+    discount: discount,
+    delivery: delivery,
+    total: totalSum,
+  };
 }
 
 const cartApi = {
